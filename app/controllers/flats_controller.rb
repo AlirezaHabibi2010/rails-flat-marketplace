@@ -3,33 +3,40 @@ class FlatsController < ApplicationController
   before_action :set_flat, only: %i[show edit update destroy]
 
   def index
-    @flats = Flat.all
+    @flats = policy_scope(Flat)
   end
 
   def show
+    authorize @flat
   end
 
   def new
     @flat = Flat.new
-  end
-
-  def edit
-  end
-
-  def update
-    @flat.update(flat_params)
-    if @flat.save
-      redirect_to flat_path(@flat)
-    else
-      render :new, status: :unprocessable_entity
-    end
+    authorize @flat
   end
 
   def create
     @flat = Flat.new(flat_params)
     @flat.user = current_user
+    authorize @flat
+
     if @flat.save
-      redirect_to flat_path(@flat)
+      redirect_to flat_path(@flat), notice: "Flat was successfully saved."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    authorize @flat
+  end
+
+  def update
+    @flat.update(flat_params)
+    authorize @flat
+
+    if @flat.save
+      redirect_to flat_path(@flat), notice: "Flat was successfully updated."
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +44,8 @@ class FlatsController < ApplicationController
 
   def destroy
     @flat.destroy
-    redirect_to flats_path, status: :see_other
+    authorize @flat
+    redirect_to flats_path, status: :see_other, notice: "Flat was successfully destroyed."
   end
 
   private
@@ -47,6 +55,6 @@ class FlatsController < ApplicationController
   end
 
   def flat_params
-    params.require(:flat).permit(:name, :description,:address,:price, photos: [])
+    params.require(:flat).permit(:name, :description, :address, :price, photos: [])
   end
 end

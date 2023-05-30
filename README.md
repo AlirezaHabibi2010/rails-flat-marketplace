@@ -2,8 +2,13 @@ Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/ra
 
 
 heroku run rails active_storage:install
+
 heroku run rails db:migrate
 
+
+
 bundle install
+
 rails active_storage:install
+
 rails db:migrate
