@@ -1,6 +1,6 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: white;
+  background: #B2B2B2;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -9,4 +9,22 @@
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+
+$color_1: rgba(0, 0, 0, 0.3);
+$color_2: black;
+$color_3: #D23333;
+
+.navbar-brand {
+  font-weight: normal;
+  font-family: 'Libre Franklin', sans-serif;
+}
+
+.nav-link {
+  color: black;
+
+  &:hover {
+    color: $color_3;
+  }
+
 }
