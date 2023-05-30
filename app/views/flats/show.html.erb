@@ -1,0 +1,16 @@
+ <h1><%= @flat.name %></h1>
+ <p> <%= @flat.description %></p>
+ <p>  <%= @flat.price %> €</p>
+ <p>  <%= @flat.address %></p>
+ <p>  <%= @flat.user.email %></p>
+
+<% @flat.photos.each do |photo| %>
+  <p> <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %> </p>
+<% end %>
+
+  <%= link_to "Delete",
+    flat_path(@flat),
+    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+  %>
+  <%= link_to "All flats",  flats_path   %>
+  <%= link_to "Edit this flat",  edit_flat_path(@flat)   %>
