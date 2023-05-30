@@ -1,51 +1,76 @@
  <h1><%= @flat.name %></h1>
- <p> <%= @flat.description %></p>
- <p>  <%= @flat.price %> €</p>
- <p>  <%= @flat.address %></p>
- <p>  <%= @flat.user.email %></p>
 
-<% @flat.photos.each do |photo| %>
-  <p> <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %> </p>
-<% end %>
-
-<h4>Booked:</h4>
-  <u1>
-    <% @flat.bookings.each do |booking| %>
-        <li>
-        <%= booking.start_date%>, <%= booking.end_date %>,
-        <br>&nbsp
-        reserved by: <%= booking.user.email %>
-        <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
-
-        <% if policy(booking).destroy? %>
-          <%= link_to "Delete",
-            booking_path(booking),
-            data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
-            class: "btn btn-danger"
-          %>
+    <div id="picture-carousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% @flat.photos.each_with_index do |photo, index| %>
+          <div class="carousel-item<%= " active" if index == 0 %>">
+            <%= cl_image_tag photo.key, class: "d-block w-100" %>
+          </div>
         <% end %>
-        ,
-        <% if policy(booking).edit? %>
-          <%= link_to "edit",edit_booking_path(booking), class: "btn btn-warning" %>
-        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#picture-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#picture-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
 
-        </li>
-    <%end%>
-  </u1>
+<div class="container p-3">
+  <div class="row p-3">
+    <h4>Description</h4>
+    <p><%= @flat.description %></p>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 p-3">
+      <h4>Details</h4>
+      <p><%= @flat.price %> €</p>
+      <p><%= @flat.address %></p>
+      <p><%= @flat.user.email %></p>
+      <% if policy(@flat).destroy? %>
+        <%= link_to "Delete",
+          flat_path(@flat),
+          data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+          class: "btn btn-danger"
+        %>
+      <%end%>
 
+      <% if policy(@flat).edit? %>
+        <%= link_to "Edit this flat",  edit_flat_path(@flat), class: "btn btn-warning"  %>
+      <%end%>
 
-<% if policy(@flat).destroy? %>
-  <%= link_to "Delete",
-    flat_path(@flat),
-    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
-    class: "btn btn-danger"
-  %>
-<%end%>
+      <%= link_to "Book this flat",  new_flat_booking_path(@flat), class: "btn btn-success" %>
 
-<% if policy(@flat).edit? %>
-  <%= link_to "Edit this flat",  edit_flat_path(@flat), class: "btn btn-warning"  %>
-<%end%>
+      <%= link_to "All flats", flats_path, class: "btn btn-primary"  %>
+    </div>
 
-<%= link_to "Book this flat",  new_flat_booking_path(@flat), class: "btn btn-success" %>
+    <div class="col-lg-6 p-3">
+      <h4>Bookings</h4>
+      <u1>
+        <% @flat.bookings.each do |booking| %>
+          <li>
+          <%= booking.start_date%>, <%= booking.end_date %>,
+          <br>&nbsp
+          reserved by: <%= booking.user.email %>
+          <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
 
-<%= link_to "All flats", flats_path, class: "btn btn-primary"  %>
+          <% if policy(booking).destroy? %>
+            <%= link_to "Delete",
+              booking_path(booking),
+              data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+              class: "btn btn-danger"
+            %>
+          <% end %>
+          ,
+          <% if policy(booking).edit? %>
+            <%= link_to "edit",edit_booking_path(booking), class: "btn btn-warning" %>
+          <% end %>
+
+          </li>
+        <%end%>
+      </u1>
+    </div>
+  </div>
+</div>
