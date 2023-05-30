@@ -1,6 +1,37 @@
+
+
 <h1>All flats</h1>
 <ul>
   <% @flats.each do |flat| %>
+    <section class="container">
+  <div id="carousel<%= flat.id %>" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="gallery-border col-md-4 my-2">
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="gallery-border col-md-4 my-2">
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="gallery-border col-md-4 my-2">
+          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
     <li><%= link_to flat.name, flat_path(flat) %></li>
   <% end %>
 </ul>
