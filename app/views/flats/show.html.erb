@@ -8,9 +8,44 @@
   <p> <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %> </p>
 <% end %>
 
+<h4>Booked:</h4>
+  <u1>
+    <% @flat.bookings.each do |booking| %>
+        <li>
+        <%= booking.start_date%>, <%= booking.end_date %>,
+        <br>&nbsp
+        reserved by: <%= booking.user.email %>
+        <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
+
+        <% if policy(booking).destroy? %>
+          <%= link_to "Delete",
+            booking_path(booking),
+            data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+            class: "btn btn-danger"
+          %>
+        <% end %>
+        ,
+        <% if policy(booking).edit? %>
+          <%= link_to "edit",edit_booking_path(booking), class: "btn btn-warning" %>
+        <% end %>
+
+        </li>
+    <%end%>
+  </u1>
+
+
+<% if policy(@flat).destroy? %>
   <%= link_to "Delete",
     flat_path(@flat),
-    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+    class: "btn btn-danger"
   %>
-  <%= link_to "All flats",  flats_path   %>
-  <%= link_to "Edit this flat",  edit_flat_path(@flat)   %>
+<%end%>
+
+<% if policy(@flat).edit? %>
+  <%= link_to "Edit this flat",  edit_flat_path(@flat), class: "btn btn-warning"  %>
+<%end%>
+
+<%= link_to "Book this flat",  new_flat_booking_path(@flat), class: "btn btn-success" %>
+
+<%= link_to "All flats", flats_path, class: "btn btn-primary"  %>
