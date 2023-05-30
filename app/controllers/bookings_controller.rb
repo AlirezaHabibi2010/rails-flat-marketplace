@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_flat, only: %i[new create show]
-  before_action :set_booking, only: %i[edit update destroy]
+  before_action :set_booking, only: %i[edit update destroy accept]
 
   def index
     @bookings = policy_scope(Booking)
@@ -49,6 +49,18 @@ class BookingsController < ApplicationController
     redirect_to flat_path(@booking.flat), status: :see_other
   end
 
+  def requests_list # for renter
+    @bookings = policy_scope(Booking)
+    authorize @bookings
+  end
+
+  def accept
+    @booking.update(confirmed_by_owner: true)
+    authorize @booking
+    # raise
+    redirect_to flats_owner_requests_list_path
+  end
+
   private
 
   def set_flat
@@ -60,6 +72,6 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:start_date, :end_date)
+    params.require(:booking).permit(:start_date, :end_date, :confirmed_by_owner)
   end
 end

@@ -1,0 +1,21 @@
+<h1>All Booking Requests for passanger</h1>
+<ul>
+  <% @bookings.each do |booking| %>
+    <li><%= link_to booking.flat.name, booking_path(booking) %>
+       , <%= booking.user.email %>
+          <%= link_to "Delete",
+            booking_path(booking),
+            data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+            class: "btn btn-danger"
+          %>
+          <%= link_to "edit",edit_booking_path(booking), class: "btn btn-warning" %>
+        <br>
+        , <%= booking.start_date %>
+        , <%= booking.end_date %>
+
+
+
+
+       </li>
+  <% end %>
+</ul>

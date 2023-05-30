@@ -1,0 +1,47 @@
+<h1>All Booking Requests for Owner</h1>
+
+<h3>Unconfirmed:</h3>
+<ul>
+  <% @flats.each do |flat| %>
+    <%if flat.bookings.where(confirmed_by_owner: false).size > 0 %>
+      <li><%= link_to flat.name, flat_path(flat) %>
+        <ol>
+            <% flat.bookings.each do |booking| %>
+              <%if !booking.confirmed_by_owner %>
+                <li> Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
+                  , From: <%= booking.start_date %>
+                  , To: <%= booking.end_date %>
+                  <br>
+                  <%= link_to "confirm reservation", accept_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-primary"%>
+                </li>
+
+              <% end %>
+            <% end %>
+        </ol>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+<br>
+
+<h3>Confirmed:</h3>
+<ul>
+  <% @flats.each do |flat| %>
+    <%if flat.bookings.where(confirmed_by_owner: true).size  > 0 %>
+      <li><%= link_to flat.name, flat_path(flat) %>
+        <ol>
+            <% flat.bookings.each do |booking| %>
+              <%if booking.confirmed_by_owner %>
+                <li> Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
+                  , From: <%= booking.start_date %>
+                  , To: <%= booking.end_date %>
+                  <br>
+                  <%= link_to "confirmed", "", class: "btn btn-success", method: :put%>
+                </li>
+              <% end %>
+            <% end %>
+        </ol>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

@@ -1,9 +1,10 @@
 class FlatsController < ApplicationController
-  skip_before_action :authenticate_user!, only: :index
+  skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :set_flat, only: %i[show edit update destroy]
 
   def index
     @flats = policy_scope(Flat)
+    authorize @flats
   end
 
   def show
@@ -46,6 +47,11 @@ class FlatsController < ApplicationController
     @flat.destroy
     authorize @flat
     redirect_to flats_path, status: :see_other, notice: "Flat was successfully destroyed."
+  end
+
+  def owner_requests_list # for renter
+    @flats = policy_scope(Flat).where(user: current_user)
+    authorize @flats
   end
 
   private
