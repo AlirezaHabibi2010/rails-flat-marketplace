@@ -1,2 +1,46 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+  <!-- Main content section -->
+<section class="container">
+  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="gallery-border col-md-4 my-2">
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="gallery-border col-md-4 my-2">
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="gallery-border col-md-4 my-2">
+          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
+
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
