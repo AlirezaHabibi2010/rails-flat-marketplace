@@ -7,7 +7,9 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-<div>Hello <%= current_user.first_name %> <%= current_user.last_name %>!</div>
+    <% if user_signed_in? %>
+      <div>Hello <%= current_user.first_name %> <%= current_user.last_name %>!</div>
+    <% end %>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
@@ -20,9 +22,9 @@
           </li>
 
           <li class="nav-item dropdown">
-          <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Flats</a>
+          <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Flats <i class="fa-solid fa-caret-down"></i></a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "My flats", "#", class: "dropdown-item" %>
+              <%= link_to "My flats", flats_list_path, class: "dropdown-item" %>
               <%= link_to "Add new flat", new_flat_path, class: "dropdown-item" %>
               <%= link_to "Rent Requests", flats_owner_requests_list_path, class: "dropdown-item" %>
             </div>
@@ -40,7 +42,6 @@
             <% else %>
                 <%= image_tag "https://img.favpng.com/1/15/9/scalable-vector-graphics-computer-icons-user-profile-portable-network-graphics-png-favpng-n05BjRqcBz9Ub9NtAbz8GXEaN.jpg", class: "avatar", alt: "dropdown menu" %>
             <%end%>
-
             </a>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <%= link_to "Action", "#", class: "dropdown-item" %>

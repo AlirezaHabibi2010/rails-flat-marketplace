@@ -7,11 +7,22 @@ class FlatPolicy < ApplicationPolicy
     end
   end
 
+  class ScopeList < Scope
+    # NOTE: Be explicit about which records you allow access to!
+    def resolve
+      user.admin? ? scope.all : scope.where(user: user)
+    end
+  end
+
   def index?
     true
   end
 
   def show?
+    true
+  end
+
+  def list?
     true
   end
 
@@ -34,6 +45,4 @@ class FlatPolicy < ApplicationPolicy
   def accept?
     true
   end
-
-
 end

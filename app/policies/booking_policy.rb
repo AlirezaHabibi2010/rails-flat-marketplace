@@ -42,4 +42,8 @@ class BookingPolicy < ApplicationPolicy
   def accept?
     record.flat.user == user
   end
+
+  def confirmation?
+    record.user == user
+  end
 end

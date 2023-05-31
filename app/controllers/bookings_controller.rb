@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_flat, only: %i[new create show]
-  before_action :set_booking, only: %i[edit update destroy accept]
+  before_action :set_booking, only: %i[edit update destroy accept confirmation]
 
   def index
     @bookings = policy_scope(Booking)
@@ -24,7 +24,7 @@ class BookingsController < ApplicationController
 
     authorize @booking
     if @booking.save
-      redirect_to flat_path(@flat)
+      redirect_to booking_confirmation_path(@booking)
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,6 +37,7 @@ class BookingsController < ApplicationController
   def update
     authorize @booking
     if @booking.update(booking_params)
+      @booking.update(confirmed_by_owner: false)
       redirect_to flat_path(@booking.flat)
     else
       render :new, status: :unprocessable_entity
@@ -55,12 +56,17 @@ class BookingsController < ApplicationController
   end
 
   def accept
-    @booking.update(confirmed_by_owner: true)
     authorize @booking
-    # raise
-    redirect_to flats_owner_requests_list_path
+    if @booking.update(confirmed_by_owner: true)
+      redirect_to flats_owner_requests_list_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
+  def confirmation
+    authorize @booking
+  end
   private
 
   def set_flat
