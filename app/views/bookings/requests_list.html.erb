@@ -1,7 +1,7 @@
 <h1>All Booking Requests for passanger</h1>
 <ul>
   <% @bookings.each do |booking| %>
-    <li><%= link_to booking.flat.name, booking_path(booking) %>
+    <li><%= link_to booking.flat.name, flat_path(booking.flat) %>
        , <%= booking.user.email %>
           <%= link_to "Delete",
             booking_path(booking),

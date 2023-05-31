@@ -1,47 +1,65 @@
-<h1>All Booking Requests for Owner</h1>
+<div class="container">
+  <h1 class="text-center mt-3">All Booking Requests for Owner</h1>
 
-<h3>Unconfirmed:</h3>
-<ul>
-  <% @flats.each do |flat| %>
-    <%if flat.bookings.where(confirmed_by_owner: false).size > 0 %>
-      <li><%= link_to flat.name, flat_path(flat) %>
-        <ol>
+  <h3>Pending booking requests:</h3>
+  <ul class="list-group">
+    <% @flats.each do |flat| %>
+      <% if flat.bookings.where(confirmed_by_owner: false).size > 0 %>
+        <li class="list-group-item">
+          <h5><%= link_to flat.name, flat_path(flat) %></h5>
+          <ol class="list-group">
             <% flat.bookings.each do |booking| %>
-              <%if !booking.confirmed_by_owner %>
-                <li> Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
-                  , From: <%= booking.start_date %>
-                  , To: <%= booking.end_date %>
-                  <br>
-                  <%= link_to "confirm reservation", accept_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-primary"%>
-                </li>
-
-              <% end %>
-            <% end %>
-        </ol>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
-<br>
-
-<h3>Confirmed:</h3>
-<ul>
-  <% @flats.each do |flat| %>
-    <%if flat.bookings.where(confirmed_by_owner: true).size  > 0 %>
-      <li><%= link_to flat.name, flat_path(flat) %>
-        <ol>
-            <% flat.bookings.each do |booking| %>
-              <%if booking.confirmed_by_owner %>
-                <li> Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
-                  , From: <%= booking.start_date %>
-                  , To: <%= booking.end_date %>
-                  <br>
-                  <%= link_to "confirmed", "", class: "btn btn-success", method: :put%>
+              <% if !booking.confirmed_by_owner %>
+                <li class="list-group-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
+                      <br>
+                      From: <%= booking.start_date %>
+                      <br>
+                      To: <%= booking.end_date %>
+                    </div>
+                    <div>
+                      <%= link_to "Confirm Reservation", accept_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-primary me-2" %>
+                      <%= link_to "Reject","#", class: "btn btn-danger" %>
+                    </div>
+                  </div>
                 </li>
               <% end %>
             <% end %>
-        </ol>
-      </li>
+          </ol>
+        </li>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
+  <br>
+
+  <h3>Confirmed:</h3>
+  <ul class="list-group">
+    <% @flats.each do |flat| %>
+      <% if flat.bookings.where(confirmed_by_owner: true).size > 0 %>
+        <li class="list-group-item">
+          <h5><%= link_to flat.name, flat_path(flat) %></h5>
+          <ol class="list-group">
+            <% flat.bookings.each do |booking| %>
+              <% if booking.confirmed_by_owner %>
+                <li class="list-group-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
+                      <br>
+                      From: <%= booking.start_date %>
+                      <br>
+                      To: <%= booking.end_date %>
+                    </div>
+                    <span class="badge bg-success">Confirmed</span>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          </ol>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
