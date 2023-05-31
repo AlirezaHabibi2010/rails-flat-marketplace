@@ -3,7 +3,7 @@
 
 <% @flats.each do |flat| %>
 
-    <div class="row justify-content-between w-100 border border-secondary rounded">
+    <div class="row justify-content-between w-100 border border-secondary rounded mt-1">
       <div class="col-4 px-0">
         <%= cl_image_tag flat.photos.first.key, style: "height:100px; width:100px;" %>
 
@@ -21,6 +21,5 @@
           class: "btn btn-danger"
         %>
       </div>
-    </div>
   </div>
 <% end %>
