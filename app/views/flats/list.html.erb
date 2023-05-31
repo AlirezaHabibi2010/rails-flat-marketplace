@@ -1,0 +1,26 @@
+
+<h1>My flats:</h1>
+
+<% @flats.each do |flat| %>
+
+    <div class="row justify-content-between w-100 border border-secondary rounded">
+      <div class="col-4 px-0">
+        <%= cl_image_tag flat.photos.first.key, style: "height:100px; width:100px;" %>
+
+        <%# <img  src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" /> %>
+      </div>
+      <div class="col-3 align-middle flex-grow-1">
+          <h2><%= link_to flat.name, flat_path(flat), class:"link-primary text-decoration-none" %></h2>
+          <p> <%=flat.price%>€</p>
+      </div>
+      <div class="col-4 align-right">
+        <%= link_to "Edit this flat",  edit_flat_path(flat), class: "btn btn-warning"  %>
+        <%= link_to "Delete",
+          flat_path(flat),
+          data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+          class: "btn btn-danger"
+        %>
+      </div>
+    </div>
+  </div>
+<% end %>
