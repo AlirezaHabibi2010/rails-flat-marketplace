@@ -11,6 +11,11 @@ class FlatsController < ApplicationController
     authorize @flat
   end
 
+  def list
+    @flats = policy_scope(Flat, policy_scope_class: FlatPolicy::ScopeList)
+    authorize @flats
+  end
+
   def new
     @flat = Flat.new
     authorize @flat
