@@ -34,7 +34,7 @@
           <%= link_to "Delete",
           flat_path(@flat),
           data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
-          class: "btn btn-danger"
+          class: "btn btn-secondary"
         %>
         <%end%>
         <% if policy(@flat).edit? %>
@@ -55,15 +55,8 @@
             reserved by: <%= booking.user.email %>
             <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
             <div>
-              <% if policy(@flat).destroy? %>
-                <%= link_to "Delete",
-          flat_path(@flat),
-          data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
-          class: "btn btn-secondary"
-        %>
-              <%end%>
-              <% if policy(@flat).edit? %>
-                <%= link_to "Edit this flat",  edit_flat_path(@flat), class: "btn btn-secondary"  %>
+              <% if policy(booking).edit? %>
+                <%= link_to "Edit",  edit_booking_path(booking), class: "btn btn-secondary"  %>
               <%end%>
               <% if policy(booking).destroy? %>
                 <%= link_to "Delete",
@@ -71,12 +64,6 @@
               data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
               class: "btn btn-secondary"
             %>
-              <% end %>
-              <% if policy(@flat).edit? %>
-                <%= link_to "Edit this flat",  edit_flat_path(@flat), class: "btn btn-secondary"  %>
-              <%end%>
-              <% if policy(booking).edit? %>
-                <%= link_to "edit",edit_booking_path(booking), class: "btn btn-secondary" %>
               <% end %>
             </div>
           </li>
