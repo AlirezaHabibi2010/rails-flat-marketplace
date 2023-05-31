@@ -1,39 +1,33 @@
-
-
-<h1>All flats</h1>
-<ul>
-  <% @flats.each do |flat| %>
-    <section class="container">
-  <div id="carousel<%= flat.id %>" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="gallery-border col-md-4 my-2">
-          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+<h1 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h1>
+  <ul class="cards">
+    <% @flats.each do |flat| %>
+      <li class="card-category">
+        <div id="carousel<%= flat.id %>" class="carousel slide">
+          <div class="carousel-inner">
+            <% flat.photos.each_with_index do |photo, index| %>
+              <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                <div class="gallery-border">
+                  <%= image_tag(photo.url, class: "img-fluid my-2 carousel-image", alt: "Flat Photo") %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-      </div>
-      <div class="carousel-item">
-        <div class="gallery-border col-md-4 my-2">
-          <%= image_tag("t1.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
+        <div class="card-text">
+          <%= link_to flat.name, flat_path(flat), class: "flat-links" %>
+          <p>Price: <%= flat.price %></p>
+          <p>Location: <%= flat.address %></p>
         </div>
-      </div>
-      <div class="carousel-item">
-        <div class="gallery-border col-md-4 my-2">
-          <%= image_tag("t2.jpg", class: "img-fluid my-2", alt: "Button Icon Set") %>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</section>
+      </li>
+    <% end %>
+  </ul>
 
-    <li><%= link_to flat.name, flat_path(flat) %></li>
-  <% end %>
-</ul>
-
-  <%= link_to "new flat",  new_flat_path, class: "btn btn-primary"   %>
+<%= link_to "New Flat", new_flat_path %>
