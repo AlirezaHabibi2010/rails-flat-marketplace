@@ -2,9 +2,18 @@ class BookingPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.all
+      if user.admin?
+        scope.all
+      else
+        scope.where(user: user)
+      end
+
     end
   end
+
+  # def my_gardens
+  #   @gardens = policy_scope(Garden, policy_scope_class: GardenPolicy::MyScope)
+  # end
 
   def index?
     true
@@ -19,10 +28,18 @@ class BookingPolicy < ApplicationPolicy
   end
 
   def update?
-    record.user == user
+    (record.user == user)
   end
 
   def destroy?
     record.user == user
+  end
+
+  def requests_list?
+    true
+  end
+
+  def accept?
+    record.flat.user == user
   end
 end
