@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: "flats#index"
   devise_for :users
   get "/bookings/requests_list", to: "bookings#requests_list"
+  get "/bookings/:id/confirmation", to: "bookings#confirmation", as:"booking_confirmation"
   get "/flats/owner_requests_list", to: "flats#owner_requests_list"
   # root to: "pages#home"
   resources :flats do
