@@ -105,7 +105,8 @@ rand((15..20)).times.each do |i|
   flat = Flat.new(name: Faker::Name.female_first_name , description: descriptions.sample, address: addresses.sample, price: rand(100..900), user_id: user_ids.sample)
   rand((3..5)).times.each do |_|
     add_imag(flat, random_flat_url);
-    flat.save!
+    flat.save!;
+    sleep(1.0)
   end
 end
 
