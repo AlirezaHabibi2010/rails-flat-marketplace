@@ -1,65 +1,80 @@
-<div class="container">
-  <h1 class="text-center mt-3">All Booking Requests for Owner</h1>
+<h1 class="text-center mt-3">All Booking Requests for Owner</h1>
 
-  <h3>Pending booking requests:</h3>
-  <ul class="list-group">
-    <% @flats.each do |flat| %>
-      <% if flat.bookings.where(confirmed_by_owner: false).size > 0 %>
-        <li class="list-group-item">
-          <h5><%= link_to flat.name, flat_path(flat) %></h5>
-          <ol class="list-group">
-            <% flat.bookings.each do |booking| %>
-              <% if !booking.confirmed_by_owner %>
-                <li class="list-group-item">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
-                      <br>
-                      From: <%= booking.start_date %>
-                      <br>
-                      To: <%= booking.end_date %>
-                    </div>
-                    <div>
-                      <%= link_to "Confirm Reservation", accept_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-primary me-2" %>
-                      <%= link_to "Reject","#", class: "btn btn-danger" %>
-                    </div>
+<h3>Pending booking requests:</h3>
+<ul class="list-group">
+  <% @pending_requests.each do |flat| %>
+      <li class="list-group-item">
+        <h5 class="text-center"><%= link_to flat.first.name, flat_path(flat.first), class: "text-decoration-none" %></h5>
+        <ol class="list-group">
+          <% flat.last.each do |booking| %>
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Reserved By:</strong> <%= "#{booking.user.first_name} #{booking.user.last_name}" %>
+                    <br>
+                    <strong>From:</strong> <%= booking.start_date %>
+                    <br>
+                    <strong>To: </strong><%= booking.end_date %>
                   </div>
-                </li>
-              <% end %>
-            <% end %>
-          </ol>
-        </li>
-      <% end %>
-    <% end %>
-  </ul>
-  <br>
+                  <div>
+                    <%= link_to "Confirm", accept_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-primary me-2" %>
+                    <%= link_to "Decline", decline_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-danger" %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </li>
+  <% end %>
+</ul>
+<br>
 
-  <h3>Confirmed:</h3>
-  <ul class="list-group">
-    <% @flats.each do |flat| %>
-      <% if flat.bookings.where(confirmed_by_owner: true).size > 0 %>
-        <li class="list-group-item">
-          <h5><%= link_to flat.name, flat_path(flat) %></h5>
-          <ol class="list-group">
-            <% flat.bookings.each do |booking| %>
-              <% if booking.confirmed_by_owner %>
-                <li class="list-group-item">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
-                      <br>
-                      From: <%= booking.start_date %>
-                      <br>
-                      To: <%= booking.end_date %>
-                    </div>
-                    <span class="badge bg-success">Confirmed</span>
+<h3>Confirmed:</h3>
+<ul class="list-group">
+  <% @accepted.each do |flat| %>
+      <li class="list-group-item">
+        <h5><%= link_to flat.first.name, flat_path(flat.first) %></h5>
+        <ol class="list-group">
+          <% flat.last.each do |booking| %>
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
+                    <br>
+                    From: <%= booking.start_date %>
+                    <br>
+                    To: <%= booking.end_date %>
                   </div>
-                </li>
-              <% end %>
-            <% end %>
-          </ol>
-        </li>
-      <% end %>
-    <% end %>
-  </ul>
-</div>
+                  <span class="btn btn-success disabled">Confirmed</span>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </li>
+  <% end %>
+</ul>
+
+<h3>Declined:</h3>
+<ul class="list-group">
+  <% @declined.each do |flat| %>
+      <li class="list-group-item">
+        <h5><%= link_to flat.first.name, flat_path(flat.first) %></h5>
+        <ol class="list-group">
+          <% flat.last.each do |booking| %>
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}" %>
+                    <br>
+                    From: <%= booking.start_date %>
+                    <br>
+                    To: <%= booking.end_date %>
+                  </div>
+                  <span class="btn btn-info disabled">Declined</span>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </li>
+  <% end %>
+</ul>
