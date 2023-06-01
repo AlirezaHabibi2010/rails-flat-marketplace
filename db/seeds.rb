@@ -99,7 +99,7 @@ addresses = [
   "Bahnhofstraße 11, 51379 Leverkusen",
 ]
 # name: "The holy flat", description: nil, address: nil, price: nil, user_id: nil
-rand((15..20)).times.each do |i|
+rand((7..10)).times.each do |i|
   puts "flat number", i
   random_flat_url = "https://source.unsplash.com/random/500×1000/?room"
   flat = Flat.new(name: Faker::Name.female_first_name , description: descriptions.sample, address: addresses.sample, price: rand(100..900), user_id: user_ids.sample)
