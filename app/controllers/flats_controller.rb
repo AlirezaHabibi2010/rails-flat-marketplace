@@ -21,6 +21,7 @@ class FlatsController < ApplicationController
         name: flat.name,
         marker_html: render_to_string(partial: "marker", locals: {flat: flat})
       }
+    end
   end
 end
 
