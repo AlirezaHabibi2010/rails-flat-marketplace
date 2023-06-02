@@ -5,24 +5,27 @@ class FlatsController < ApplicationController
   def index
     @flats = policy_scope(Flat)
     authorize @flats
-
     if params[:search].present?
       @flats = Flat.search_by_name_and_address(params[:search][:search]) if params[:search][:search]
+
+      start_date = params[:search][:start_date].to_date
+      end_date = params[:search][:end_date].to_date
+      @flats = @flats.joins(:bookings).where.not("bookings.start_date < ? AND bookings.end_date > ? AND bookings.confirmed_by_owner = true",
+                   start_date, end_date)
 
       # @flats = @flats.available(params[:search][:start_date].to_date, params[:search][:end_date].to_date)
     else
       @flats = Flat.all
     end
 
-    if !@flats.empty?
-      @markers = @flats.geocoded.map do |flat|
-        {
-          lat: flat.latitude,
-          lng: flat.longitude,
-          name: flat.name,
-          marker_html: render_to_string(partial: "marker", locals: {flat: flat})
-        }
-      end
+
+    @markers = @flats.geocoded.map do |flat|
+      {
+        lat: flat.latitude,
+        lng: flat.longitude,
+        name: flat.name,
+        marker_html: render_to_string(partial: "marker", locals: {flat: flat})
+      }
     end
   end
 
