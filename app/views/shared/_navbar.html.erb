@@ -1,5 +1,5 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid ">
+  <div class="container-fluid">
     <%= link_to "/", class: "navbar-brand" do %>
       <%= image_tag "https://a0.muscache.com/airbnb/static/logotype_favicon-21cc8e6c6a2cca43f061d2dcabdf6e58.ico" %> LeWagonBnB
     <% end %>
@@ -7,10 +7,20 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <% if user_signed_in? %>
-      <div>Hello <%= current_user.first_name %> <%= current_user.last_name %>!</div>
-    <% end %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <%# <% if user_signed_in? %>
+      <%# <div>Hello <%= current_user.first_name %>
+    <%# <% end %>
+       <%= simple_form_for :search, class: "d-flex align-items-center", method: :get, data: { controller: 'flatpickr' } do |f| %>
+          <div class="d-flex align-items-center nav-search-bar">
+            <%= f.input :search, label: false, placeholder: "enter location" %>
+            <%= f.input :start_date, as: :string, input_html: { data: { flatpickr_target: "startTime" } }, label: false, placeholder: "Starting from..."%>
+            <%= f.input :end_date, as: :string, input_html: { data: { flatpickr_target: "endTime" } }, label: false, placeholder: "Until..."%>
+              <button name="button" type="submit" class="btn btn-flat">
+              <i class="fas fa-search"></i> Search
+               </button>
+              </div>
+      <% end %>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item active">

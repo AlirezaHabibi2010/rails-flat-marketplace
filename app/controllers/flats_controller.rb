@@ -5,6 +5,15 @@ class FlatsController < ApplicationController
   def index
     @flats = policy_scope(Flat)
     authorize @flats
+
+    if params[:search].present?
+      @flats = Flat.search_by_name_and_address(params[:search][:search]) if params[:search][:search]
+
+      # @flats = @flats.available(params[:search][:start_date].to_date, params[:search][:end_date].to_date)
+    else
+      @flats = Flat.all
+    end
+    
     @markers = @flats.geocoded.map do |flat|
       {
         lat: flat.latitude,
@@ -12,7 +21,6 @@ class FlatsController < ApplicationController
         name: flat.name,
         marker_html: render_to_string(partial: "marker", locals: {flat: flat})
       }
-    end
   end
 
   def show
