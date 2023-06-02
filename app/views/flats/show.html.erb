@@ -1,53 +1,53 @@
-<div class="container">
-<h1><%= @flat.name %></h1>
-<div id="picture-carousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <% @flat.photos.each_with_index do |photo, index| %>
-      <div class="carousel-item<%= " active" if index == 0 %>">
-        <%= cl_image_tag photo.key, class: "d-block w-100" %>
-      </div>
-    <% end %>
+  <div class="container">
+  <h1><%= @flat.name %></h1>
+  <div id="picture-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% @flat.photos.each_with_index do |photo, index| %>
+        <div class="carousel-item<%= " active" if index == 0 %>">
+          <%= cl_image_tag photo.key, class: "d-block w-100" %>
+        </div>
+      <% end %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#picture-carousel" data-bs-slide="prev" onclick="event.stopPropagation();">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#picture-carousel" data-bs-slide="next" onclick="event.stopPropagation();">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#picture-carousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#picture-carousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-<div class="container mt-3">
-  <div class="row">
-    <div class="col-sm-6 mb-3 mb-sm-0">
-      <div class=" border border-3 rounded-end p-3">
-        <h4 class="card-title">Description:</h4>
-        <p class="card-text"><%= @flat.description %></p>
-        <hr>
-        <h4>Details:</h4>
-        <p><%= @flat.price %> €</p>
-        <p><%= @flat.address %></p>
-        <p><%= @flat.user.first_name %></p>
-        <hr>
-        <%= link_to "Book this flat",  new_flat_booking_path(@flat), class: "btn btn-secondary" %>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class=" border border-3 rounded-end p-3">
+          <h4 class="card-title">Description:</h4>
+          <p class="card-text"><%= @flat.description %></p>
+          <hr>
+          <h4>Details:</h4>
+          <p><%= @flat.price %> €</p>
+          <p><%= @flat.address %></p>
+          <p><%= @flat.user.first_name %></p>
+          <hr>
+          <%= link_to "Book this flat",  new_flat_booking_path(@flat), class: "btn btn-secondary" %>
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3 mb-sm-0 ">
+        <div class="border border-3 rounded-end p-3 ">
+          <h4 class="card-title">Bookings</h4>
+          <ol class="list-group">
+          <% @flat.bookings.each do |booking| %>
+            <li class=" list-group-item d-flex justify-content-between">
+            <strong>From:</strong>
+              <%= booking.start_date%>, <strong>to:</strong> <%= booking.end_date %>,
+              <br>
+              &nbsp
+              reserved by: <%= booking.user.first_name %>
+              <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
+            </li>
+          <%end%>
+          </ol>
+        </div>
       </div>
     </div>
-    <div class="col-sm-6 mb-3 mb-sm-0 ">
-      <div class="border border-3 rounded-end p-3 ">
-        <h4 class="card-title">Bookings</h4>
-        <ol class="list-group">
-        <% @flat.bookings.each do |booking| %>
-          <li class=" list-group-item d-flex justify-content-between">
-          <strong>From:</strong>
-            <%= booking.start_date%>, <strong>to:</strong> <%= booking.end_date %>,
-            <br>
-            &nbsp
-            reserved by: <%= booking.user.first_name %>
-            <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
-          </li>
-        <%end%>
-        </ol>
-      </div>
-    </div>
   </div>
-</div>
