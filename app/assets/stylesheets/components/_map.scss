@@ -6,3 +6,14 @@
   text-align: center;
   font-family: "Open Sans", sans-serif;
 }
+#collapsableMap {
+  width: 50%; /* Adjust the width as needed */
+  // float: right; /* Float the map container to the right */
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+ .map-container {
+
+   height: 800px;
+ }

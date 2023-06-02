@@ -1,47 +1,47 @@
 <div class="container">
-<h1 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h1>
-<ul class="cards">
-  <% @flats.each do |flat| %>
-    <li class="card-category" onclick="window.location.href='<%= flat_path(flat) %>';">
-      <div id="carousel<%= flat.id %>" class="carousel slide">
-        <div class="carousel-inner">
-          <% flat.photos.each_with_index do |photo, index| %>
-            <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-              <div class="gallery-border">
-                <%= image_tag(photo.url, class: "img-fluid my-2 carousel-image", alt: "Flat Photo") %>
-              </div>
+  <h1 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h1>
+  <div class="d-flex">
+    <ul class="cards">
+      <% @flats.each do |flat| %>
+        <li class="card-category" onclick="window.location.href='<%= flat_path(flat) %>';">
+          <div id="carousel<%= flat.id %>" class="carousel slide">
+            <div class="carousel-inner">
+              <% flat.photos.each_with_index do |photo, index| %>
+                <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                  <div class="gallery-border">
+                    <%= image_tag(photo.url, class: "img-fluid my-2 carousel-image", alt: "Flat Photo") %>
+                  </div>
+                </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev" onclick="event.stopPropagation();">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next" onclick="event.stopPropagation();">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      <div class="card-text">
-        <%= link_to flat.name, flat_path(flat), class: "flat-links" %>
-        <p>Price: <%= flat.price %></p>
-        <p>Location: <%= flat.address %></p>
-      </div>
-    </li>
-  <% end %>
-</ul>
-
-<p>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsableMap" aria-expanded="false" aria-controls="collapseExample">
-    Toggle map
-  </button>
-</p>
-<div class="collapse show" id="collapsableMap">
-  <div
-    style="width: 100%; height: 600px;"
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev" onclick="event.stopPropagation();">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next" onclick="event.stopPropagation();">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <div class="card-text">
+            <%= link_to flat.name, flat_path(flat), class: "flat-links" %>
+            <p>Price: <%= flat.price %></p>
+            <p>Location: <%= flat.address %></p>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <div class="collapse show mt-2" id="collapsableMap">
+      <div class="map-container"
     data-controller="map"
     data-map-markers-value="<%= @markers.to_json %>"
     data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+    </div>
   </div>
 </div>
-</div>
+<%# <p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsableMap" aria-expanded="false" aria-controls="collapseExample">
+    Toggle map
+  </button>
+</p> %>
