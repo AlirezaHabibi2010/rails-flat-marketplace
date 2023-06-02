@@ -9,18 +9,20 @@ class FlatsController < ApplicationController
     if params[:search].present?
       @flats = Flat.search_by_name_and_address(params[:search][:search]) if params[:search][:search]
 
-      @flats = @flats.available(params[:search][:start_date].to_date, params[:search][:end_date].to_date)
+      # @flats = @flats.available(params[:search][:start_date].to_date, params[:search][:end_date].to_date)
     else
       @flats = Flat.all
     end
 
-    @markers = @flats.geocoded.map do |flat|
-      {
-        lat: flat.latitude,
-        lng: flat.longitude,
-        name: flat.name,
-        marker_html: render_to_string(partial: "marker", locals: {flat: flat})
-      }
+    if !@flats.empty?
+      @markers = @flats.geocoded.map do |flat|
+        {
+          lat: flat.latitude,
+          lng: flat.longitude,
+          name: flat.name,
+          marker_html: render_to_string(partial: "marker", locals: {flat: flat})
+        }
+      end
     end
   end
 
