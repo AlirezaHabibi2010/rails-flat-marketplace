@@ -11,7 +11,7 @@ class FlatsController < ApplicationController
       start_date = params[:search][:start_date].to_date
       end_date = params[:search][:end_date].to_date
       @flats = @flats.joins(:bookings).where.not("bookings.start_date < ? AND bookings.end_date > ? AND bookings.confirmed_by_owner = true",
-                   start_date, end_date)
+                   start_date, end_date).uniq
 
       # @flats = @flats.available(params[:search][:start_date].to_date, params[:search][:end_date].to_date)
     else
