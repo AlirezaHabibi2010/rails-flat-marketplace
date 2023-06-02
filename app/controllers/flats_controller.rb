@@ -13,7 +13,7 @@ class FlatsController < ApplicationController
     else
       @flats = Flat.all
     end
-    
+
     @markers = @flats.geocoded.map do |flat|
       {
         lat: flat.latitude,
@@ -21,6 +21,7 @@ class FlatsController < ApplicationController
         name: flat.name,
         marker_html: render_to_string(partial: "marker", locals: {flat: flat})
       }
+    end
   end
 
   def show
