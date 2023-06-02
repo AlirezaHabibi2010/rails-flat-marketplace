@@ -23,6 +23,7 @@ class FlatsController < ApplicationController
       }
     end
   end
+end
 
   def show
     authorize @flat
