@@ -1,8 +1,11 @@
 <div class="container">
-<h1>New Booking</h1>
+<h1 class="text-center mt-3">New Booking</h1>
+<div class="d-flex flex-wrap justify-content-center w-100">
+
 <%= simple_form_for [@flat, @booking], data: { controller: 'flatpickr' } do |f| %>
   <%= f.input :start_date, as: :string, input_html: { data: { flatpickr_target: "startTime" } } %>
   <%= f.input :end_date, as: :string, input_html: { data: { flatpickr_target: "endTime" } } %>
   <%= f.submit 'Submit your booking request now!', class: "btn btn-primary" %>
 <% end %>
+</div>
 </div>

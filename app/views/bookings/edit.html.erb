@@ -1,9 +1,12 @@
 <div class="container">
-<h1>Edit Booking</h1>
+<div class="d-flex flex-wrap justify-content-center w-100">
+
+<h1 class="text-center mt-3">Edit Booking</h1>
 <%= simple_form_for @booking do |f| %>
   <%= f.input :start_date,  as: :date, html5: true,  label: 'CHECK-IN' %>
   <%= f.input :end_date ,  as: :date, html5: true,  label: 'CHECK-OUT'  %>
 
   <%= f.submit "Reserve", class: "btn btn-primary" %>
 <% end %>
+</div>
 </div>

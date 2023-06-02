@@ -22,7 +22,7 @@
       <div class="col-sm-6 mb-3 mb-sm-0">
         <div class=" border border-3 rounded-end p-3">
           <h4 class="card-title">Description:</h4>
-          <p class="card-text"><%= @flat.description %></p>
+          <p class="text-left"><%= @flat.description %></p>
           <hr>
           <h4>Details:</h4>
           <p><%= @flat.price %> €</p>
@@ -38,12 +38,18 @@
           <ol class="list-group">
           <% @flat.bookings.each do |booking| %>
             <li class=" list-group-item d-flex justify-content-between">
-            <strong>From:</strong>
-              <%= booking.start_date%>, <strong>to:</strong> <%= booking.end_date %>,
-              <br>
-              &nbsp
-              reserved by: <%= booking.user.first_name %>
+            <div><p><strong>From:</strong>
+              <%= booking.start_date%>
+              </p><P> <strong>to:</strong> <%= booking.end_date %></P>
+              </div>
+              <div>
+              <p>
+              Reserved by: <%= booking.user.first_name %>
+              </p>
+              <p>
               <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
+              </p>
+              </div>
             </li>
           <%end%>
           </ol>
