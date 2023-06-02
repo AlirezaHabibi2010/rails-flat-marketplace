@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_flat, only: %i[new create show]
-  before_action :set_booking, only: %i[edit update destroy accept confirmation]
+  before_action :set_booking, only: %i[edit update destroy accept decline confirmation]
 
   def index
     @bookings = policy_scope(Booking)
@@ -8,7 +8,7 @@ class BookingsController < ApplicationController
   end
 
   def list
-    @bookings = policy_scope(Booking)
+    @bookings = policy_scope(Booking).order(:start_date)
     authorize @bookings
   end
 
@@ -37,7 +37,7 @@ class BookingsController < ApplicationController
   def update
     authorize @booking
     if @booking.update(booking_params)
-      @booking.update(confirmed_by_owner: false)
+      @booking.update({ confirmed_by_owner: false, declined: false })
       redirect_to flat_path(@booking.flat)
     else
       render :new, status: :unprocessable_entity
@@ -53,11 +53,24 @@ class BookingsController < ApplicationController
   def requests_list # for renter
     @bookings = policy_scope(Booking)
     authorize @bookings
+    @declined = @bookings.where({ confirmed_by_owner: false, declined: true})
+    @accepted = @bookings.where({ confirmed_by_owner: true, declined: false})
+    @pending_requests = @bookings.where({ confirmed_by_owner: false, declined: false})
+
   end
 
   def accept
     authorize @booking
-    if @booking.update(confirmed_by_owner: true)
+    if @booking.update({ confirmed_by_owner: true, declined: false })
+      redirect_to flats_owner_requests_list_path
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def decline
+    authorize @booking
+    if @booking.update({ declined: true, confirmed_by_owner: false })
       redirect_to flats_owner_requests_list_path
     else
       render :new, status: :unprocessable_entity
