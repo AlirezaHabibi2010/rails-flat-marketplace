@@ -1,3 +1,4 @@
+<div class="container">
 <h1><%= @flat.name %></h1>
 <div id="picture-carousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
@@ -26,20 +27,9 @@
         <h4>Details:</h4>
         <p><%= @flat.price %> €</p>
         <p><%= @flat.address %></p>
-        <p><%= @flat.user.email %></p>
+        <p><%= @flat.user.first_name %></p>
         <hr>
         <%= link_to "Book this flat",  new_flat_booking_path(@flat), class: "btn btn-secondary" %>
-        <%= link_to "All flats", flats_path, class: "btn btn-secondary"  %>
-        <% if policy(@flat).destroy? %>
-          <%= link_to "Delete",
-          flat_path(@flat),
-          data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
-          class: "btn btn-secondary"
-        %>
-        <%end%>
-        <% if policy(@flat).edit? %>
-          <%= link_to "Edit this flat",  edit_flat_path(@flat), class: "btn btn-secondary"  %>
-        <%end%>
       </div>
     </div>
     <div class="col-sm-6 mb-3 mb-sm-0 ">
@@ -52,23 +42,12 @@
             <%= booking.start_date%>, <strong>to:</strong> <%= booking.end_date %>,
             <br>
             &nbsp
-            reserved by: <%= booking.user.email %>
+            reserved by: <%= booking.user.first_name %>
             <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %>
-            <div>
-              <% if policy(booking).edit? %>
-                <%= link_to "Edit",  edit_booking_path(booking), class: "btn btn-secondary"  %>
-              <%end%>
-              <% if policy(booking).destroy? %>
-                <%= link_to "Delete",
-              booking_path(booking),
-              data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
-              class: "btn btn-secondary"
-            %>
-              <% end %>
-            </div>
           </li>
         <%end%>
         </ol>
       </div>
     </div>
   </div>
+</div>

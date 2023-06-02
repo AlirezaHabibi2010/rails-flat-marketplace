@@ -1,7 +1,8 @@
+<div class="container">
 <h1>All Bookings</h1>
 <ul>
   <% @bookings.each do |booking| %>
     <li><%= link_to booking.flat.name, booking_path(booking) %></li>
   <% end %>
 </ul>
-
+</div>

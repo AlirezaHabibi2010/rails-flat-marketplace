@@ -1,3 +1,4 @@
+<div class="container">
 <h1 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h1>
 <ul class="cards">
   <% @flats.each do |flat| %>
@@ -42,4 +43,5 @@
     data-map-markers-value="<%= @markers.to_json %>"
     data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
+</div>
 </div>
