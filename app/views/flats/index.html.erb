@@ -1,33 +1,33 @@
 <h1 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h1>
-  <ul class="cards">
-    <% @flats.each do |flat| %>
-      <li class="card-category">
-        <div id="carousel<%= flat.id %>" class="carousel slide">
-          <div class="carousel-inner">
-            <% flat.photos.each_with_index do |photo, index| %>
-              <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-                <div class="gallery-border">
-                  <%= image_tag(photo.url, class: "img-fluid my-2 carousel-image", alt: "Flat Photo") %>
-                </div>
+<ul class="cards">
+  <% @flats.each do |flat| %>
+    <li class="card-category" onclick="window.location.href='<%= flat_path(flat) %>';">
+      <div id="carousel<%= flat.id %>" class="carousel slide">
+        <div class="carousel-inner">
+          <% flat.photos.each_with_index do |photo, index| %>
+            <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+              <div class="gallery-border">
+                <%= image_tag(photo.url, class: "img-fluid my-2 carousel-image", alt: "Flat Photo") %>
               </div>
-            <% end %>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+            </div>
+          <% end %>
         </div>
-        <div class="card-text">
-          <%= link_to flat.name, flat_path(flat), class: "flat-links" %>
-          <p>Price: <%= flat.price %></p>
-          <p>Location: <%= flat.address %></p>
-        </div>
-      </li>
-    <% end %>
-  </ul>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev" onclick="event.stopPropagation();">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next" onclick="event.stopPropagation();">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <div class="card-text">
+        <%= link_to flat.name, flat_path(flat), class: "flat-links" %>
+        <p>Price: <%= flat.price %></p>
+        <p>Location: <%= flat.address %></p>
+      </div>
+    </li>
+  <% end %>
+</ul>
 
 <%= link_to "New Flat", new_flat_path %>

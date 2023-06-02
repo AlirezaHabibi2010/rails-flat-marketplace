@@ -6,7 +6,9 @@
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }
-
+.nav-search-bar > div{
+  margin-bottom: 0 !important;
+}
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }

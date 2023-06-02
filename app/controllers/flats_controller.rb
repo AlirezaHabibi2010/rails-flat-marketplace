@@ -5,6 +5,13 @@ class FlatsController < ApplicationController
   def index
     @flats = policy_scope(Flat)
     authorize @flats
+    if params[:search].present?
+      @flats = Flat.search_by_name_and_address(params[:search][:search]) if params[:search][:search]
+
+      # @flats = @flats.available(params[:search][:start_date].to_date, params[:search][:end_date].to_date)
+    else
+      @flats = Flat.all
+    end
   end
 
   def show
