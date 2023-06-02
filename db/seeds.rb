@@ -113,7 +113,7 @@ end
 flat_ids = Flat.ids
 
 puts "Creating Flats"
-rand((20..40)).times.each do |i|
+rand((10..15)).times.each do |i|
   booking = Booking.new(start_date: Faker::Date.forward(days: 30), end_date: Faker::Date.forward(days: 60), flat_id: flat_ids.sample, user_id: user_ids.sample)
   puts booking.save
 end
