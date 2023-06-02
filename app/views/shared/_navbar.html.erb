@@ -10,7 +10,7 @@
     <%# <% if user_signed_in? %>
       <%# <div>Hello <%= current_user.first_name %>
     <%# <% end %>
-       <%= simple_form_for :search, class: "d-flex align-items-center", method: :get, data: { controller: 'flatpickr' } do |f| %>
+       <%= simple_form_for :search, class: "d-flex align-items-center", method: :get, :url => flats_path, data: { controller: 'flatpickr' } do |f| %>
           <div class="d-flex align-items-center nav-search-bar">
             <%= f.input :search, label: false, placeholder: "enter location" %>
             <%= f.input :start_date, as: :string, input_html: { data: { flatpickr_target: "startTime" } }, label: false, placeholder: "Starting from..."%>
