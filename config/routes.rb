@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :bookings do
     member do
       get  "accept"
+      get  "decline"
     end
   end
 

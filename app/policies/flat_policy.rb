@@ -41,8 +41,4 @@ class FlatPolicy < ApplicationPolicy
   def owner_requests_list?
     true
   end
-
-  def accept?
-    true
-  end
 end

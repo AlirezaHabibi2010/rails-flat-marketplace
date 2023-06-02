@@ -63,7 +63,28 @@ class FlatsController < ApplicationController
   end
 
   def owner_requests_list # for renter
-    @flats = policy_scope(Flat).where(user: current_user)
+    @flats = policy_scope(Flat).where(user: current_user).order(:name)
+
+    @declined = Array.new
+    @accepted = Array.new
+    @pending_requests = Array.new
+    @flats.each do |flat|
+      @declined_list = Array.new
+      @accepted_list = Array.new
+      @pending_requests_list = Array.new
+      flat.bookings.where('start_date >= ?', Date.today).order(:start_date).each do |booking|
+        if booking.declined
+          @declined_list << booking
+        elsif booking.confirmed_by_owner
+          @accepted_list << booking
+        else
+          @pending_requests_list << booking
+        end
+      end
+      @declined <<  [flat, @declined_list] if !@declined_list.empty?
+      @accepted <<  [flat, @accepted_list] if !@accepted_list.empty?
+      @pending_requests <<  [flat, @pending_requests_list] if !@pending_requests_list.empty?
+    end
     authorize @flats
   end
 
