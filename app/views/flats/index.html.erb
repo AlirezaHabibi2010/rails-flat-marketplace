@@ -1,47 +1,50 @@
-<div class="container">
-  <h1 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h1>
-  <div class="d-flex">
-    <ul class="cards">
-      <% @flats.each do |flat| %>
-        <li class="card-category" onclick="window.location.href='<%= flat_path(flat) %>';">
-          <div id="carousel<%= flat.id %>" class="carousel slide">
-            <div class="carousel-inner">
-              <% flat.photos.each_with_index do |photo, index| %>
-                <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-                  <div class="gallery-border">
-                    <%= image_tag(photo.url, class: "img-fluid my-2 carousel-image", alt: "Flat Photo") %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="prev" onclick="event.stopPropagation();">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= flat.id %>" data-bs-slide="next" onclick="event.stopPropagation();">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-          <div class="card-text">
-            <%= link_to flat.name, flat_path(flat), class: "flat-links" %>
-            <p>Price: <%= flat.price %></p>
-            <p>Location: <%= flat.address %></p>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-    <div class="collapse show mt-2" id="collapsableMap">
-      <div class="map-container"
-    data-controller="map"
-    data-map-markers-value="<%= @markers.to_json %>"
-    data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+  <h2 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h2>
+  <div class="row justify-content-between align-content-stretch m-1">
+    <%# small window %>
+    <div class="col-12 px-1 m-0 d-md-none">
+      <div class="" id="collapsableMap">
+        <div class="" style="height: 300px"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        </div>
       </div>
     </div>
+
+
+    <div class="col-12 col-md-6">
+      <ul class="row align-content-between  p-0 m-0">
+        <% @flats.each do |flat| %>
+          <div class="col-12 col-md-6 ol-lg-6 col-xl-4">
+            <li class="card mb-1">
+              <%= render "gallery", flat: flat%>
+              <div class="card-body d-flex justify-content-between  flex-column">
+                <h4 class="card-title"><%= flat.name %></h4>
+                <p class="card-text">Price: <%= flat.price %>€ per night</p>
+                <p class="card-text"><%= flat.address %></p>
+                <a href="<%= flat_path(flat) %>" class="btn btn-primary ">Read more.</a>
+                <%# stretched-link %>
+              </div>
+            </li>
+          </div>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="col-md-6 px-1 m-0  d-none d-md-block">
+      <div class="position-sticky sticky-top" id="collapsableMap">
+        <div class="vh-100"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        </div>
+      </div>
+    </div>
+
   </div>
-</div>
-<%# <p>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsableMap" aria-expanded="false" aria-controls="collapseExample">
-    Toggle map
-  </button>
-</p> %>
+
+<h1 class="text-center">
+  <%= link_to root_path, class: "text-secondary" do %>
+    <i class="fa-solid fa-caret-up"></i>
+  <% end %>
+</h1>

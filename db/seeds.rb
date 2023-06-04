@@ -14,13 +14,30 @@ User.destroy_all
 
 def add_imag(model, url)
   downloaded_image = URI.parse(URI::Parser.new.escape(url)).open
+
+  width, height = FastImage.size(downloaded_image)
+  if height <= width
+    if model.respond_to?(:photo)
+      model.photo.attach(io: downloaded_image, filename: "avatar.jpg")
+    else
+      model.photos.attach(io: downloaded_image, filename: "avatar.jpg")
+    end
+  else
+    puts "add image again", height, width, url
+    sleep(1)
+    add_imag(model, url)
+  end
+end
+
+def add_imag_local(model, filepath)
+  downloaded_image = File.open(filepath)
+
   if model.respond_to?(:photo)
     model.photo.attach(io: downloaded_image, filename: "avatar.jpg")
   else
     model.photos.attach(io: downloaded_image, filename: "avatar.jpg")
   end
 end
-
 puts "Creating users"
 user = User.new(email: "habibi.alireza2010@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Alireza", last_name: "Habibi", address: "Jülich, Germany", admin: true)
 url = "https://avatars.githubusercontent.com/u/87390313?v=4"
@@ -100,12 +117,14 @@ addresses = [
 ]
 # name: "The holy flat", description: nil, address: nil, price: nil, user_id: nil
 rand((7..10)).times.each do |i|
-  puts "flat number", i
-  random_flat_url = "https://source.unsplash.com/random/500×1000/?room"
-  flat = Flat.new(name: Faker::Name.female_first_name , description: descriptions.sample, address: addresses.sample, price: rand(100..900), user_id: user_ids.sample)
+  puts "flat number", i + 1
+  # random_flat_url = "https://source.unsplash.com/random/500×1000/?room"
+  asser_path = "app/assets/images/room-seeds/"
+  random_flat_filenames = Dir.entries(asser_path).sort.drop(2)
+  flat = Flat.new(name: Faker::Name.female_first_name, description: descriptions.sample, address: addresses[i], price: rand(100..900), user_id: user_ids.sample)
   rand((3..5)).times.each do |_|
-    add_imag(flat, random_flat_url);
-    flat.save!;
+    add_imag_local(flat, asser_path + random_flat_filenames.sample)
+    flat.save!
     sleep(1.0)
   end
 end

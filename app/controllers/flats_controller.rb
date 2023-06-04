@@ -17,19 +17,20 @@ class FlatsController < ApplicationController
       @flats = Flat.all
     end
 
-
     @markers = @flats.geocoded.map do |flat|
       {
         lat: flat.latitude,
         lng: flat.longitude,
-        name: flat.name,
+        info_window_html: render_to_string(partial: "info_window", locals: {flat: flat}),
         marker_html: render_to_string(partial: "marker", locals: {flat: flat})
       }
     end
   end
 
   def show
+    @booking = Booking.new # Add this line
     authorize @flat
+    authorize @booking
   end
 
   def list

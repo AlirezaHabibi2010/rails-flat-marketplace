@@ -1,40 +1,30 @@
 import { Controller } from "@hotwired/stimulus"
-import { clippingParents } from "@popperjs/core";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 
-// Connects to data-controller="map"
+// Connects to data-controller="mapbox"
 export default class extends Controller {
-  static values = { apiKey: String, markers: Array }
+  static values = {
+    apiKey: String,
+    markers: Array
+  }
 
   connect() {
-    console.log(this.apiKeyValue);
-    console.log(this.markersValue);
-    mapboxgl.accessToken = this.apiKeyValue;
+    mapboxgl.accessToken = this.apiKeyValue
+
     this.map = new mapboxgl.Map({
-      container: this.element, // container ID
+      container: this.element,
       style: "mapbox://styles/mapbox/streets-v12", // style URL
-    });
-    this.#addMarkersToMap();
-    this.#fitMapToMarkers();
-
-    // FIXME: This does not get triggered
-    // $('#collapsableMap').on('shown.bs.collapse', () => {
-    //   console.log("Toggled map")
-    //   this.map.resize();
-    // });
-
-    this.map.addControl(new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl
-    }));
-
+    })
+    this.#addMarkersToMap()
+    this.#fitMapToMarkers()
+    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+                                        mapboxgl: mapboxgl }))
   }
 
   #addMarkersToMap() {
     this.markersValue.forEach((marker) => {
-        // Print name of flat in the popup
-        const popup = new mapboxgl.Popup().setHTML(marker.name)
+        const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
 
-        // Create a marker with the price
         const customMarker = document.createElement("div");
         customMarker.innerHTML = marker.marker_html;
 
@@ -50,5 +40,4 @@ export default class extends Controller {
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
     this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
   }
-
 }

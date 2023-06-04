@@ -1,6 +1,7 @@
 .footer {
   background: #B2B2B2;
   display: flex;
+  // margin-top: 50px;
   align-items: center;
   justify-content: space-between;
   left: 0px;
@@ -9,7 +10,8 @@
   padding: 20px;
   width: 100%;
   color: black;
-
+  position: sticky;
+  bottom: 0;
   .fa-heart {
     color: $color_3;
   }
@@ -32,7 +34,12 @@
   }
 }
 .page-container {
-  display: grid;
   min-height: 100vh;
-  grid-template-rows: auto 1fr auto;
+}
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+.row {
+  --bs-gutter-x: 0;
 }

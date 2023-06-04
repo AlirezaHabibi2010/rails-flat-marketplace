@@ -1,0 +1,29 @@
+<%= simple_form_for([flat, booking]) do |f| %>
+  <div class="dates">
+    <div class="form-inputs">
+      <div class="form-row">
+        <%= f.input :start_date, as: :string, label: "Dates", placeholder: "From" %>
+        <%= f.input :end_date, as: :string, label: '&nbsp;'.html_safe, placeholder: "To" %>
+      </div>
+    </div>
+  </div>
+  <div class="costs costs-hidden" data-rate="<%= flat.price.to_json %>">
+    <table class="table">
+      <tr>
+        <td>€<%= flat.price %> x <span id="hours">0</span> hours</td>
+        <td class="text-right">€<span id="price">0</span></td>
+      </tr>
+      <tr>
+        <td>Service fee</td>
+        <td class="text-right">€<span id="service-fee">0</span></td>
+      </tr>
+      <tr>
+        <td><strong>Total</strong></td>
+        <td class="text-right">€<span id=total-price>0</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="form-row">
+    <%= f.submit "book", class: "btn btn-primary btn-lg btn-block btn-booking" %>
+  </div>
+<% end %>
