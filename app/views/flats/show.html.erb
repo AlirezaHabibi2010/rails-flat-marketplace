@@ -27,7 +27,7 @@
 <div id='flat-booking-dates' data-unavailable="<%= @flat.unavailable_dates.to_json %>">
        <%= simple_form_for([@flat, @booking], data: { controller: 'flatpickr' }) do |f| %>
         <%= f.input :start_date,  label: 'CHECK-IN' , as: :string, input_html: { data: { flatpickr_target: "startTime" } } %>
-        <%= f.input :end_date,  label: 'CHECK-OUT' , as: :string, input_html: { data: { flatpickr_target: "endTime" } ,id: 'endtime'} %>
+        <%= f.input :end_date,  label: 'CHECK-OUT' , as: :string, input_html: { data: { flatpickr_target: "endTime"} ,id: 'endtime'} %>
         <%= f.submit 'Submit', class: "btn btn-primary" %>
       <% end %>
  </div>

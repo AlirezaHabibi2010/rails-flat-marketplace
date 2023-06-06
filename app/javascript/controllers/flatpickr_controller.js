@@ -19,6 +19,17 @@ export default class extends Controller {
               // Provide an id for the plugin to work
               plugins: [new rangePlugin({ input: "#endtime"})]
             })
-    flatpickr(this.endTimeTarget, {})
+    flatpickr(this.endTimeTarget, {
+              dateFormat: "Y-m-d",
+              // defaultDate: ["2024-10-11", "2024-10-10"],
+              disable: [
+                function(date) {
+                    // disable every multiple of 8
+                    return !(date.getDate() % 8);
+                }
+              ],
+              // Provide an id for the plugin to work
+              plugins: [new rangePlugin({ input: "#starttime"})]
+             })
   }
 }

@@ -8,7 +8,7 @@
     <%  flat.photos.each_with_index do |photo, index| %>
 
       <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-          <%= cl_image_tag photo.key, class:"d-block", style: "width:100%; aspect-ratio: 16 / 9;", crop: :fill%>
+          <%= cl_image_tag photo.key, class:"d-block rounded-top", style: "width:100%; aspect-ratio: 16 / 9;", crop: :fill%>
       </div>
 
     <% end %>

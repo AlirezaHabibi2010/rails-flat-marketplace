@@ -1,0 +1,22 @@
+<div class="row justify-content-center my-2">
+  <div class="col-12 col-md-6 col-xl-4">
+    <%= simple_form_for :search, method: :get, :url => flats_path, data: { controller: 'flatpickr' } do |f| %>
+      <div class="row align-content-center nav-search-bar align-items-center">
+        <div class= "col-12 col-md-4 nav-search-bar">
+          <%= f.input :search, label: false, placeholder: "where"%>
+        </div>
+        <div class= "col-12 col-md-3 nav-search-bar">
+          <%= f.input :start_date, as: :string, class: "col-12 col-md-3", input_html: { data: { flatpickr_target: "startTime" }, id: "starttime" }, label: false, placeholder: "checkin"%>
+        </div>
+        <div class= "col-12 col-md-3 nav-search-bar">
+          <%= f.input :end_date, as: :string, class: "col-12 col-md-3", input_html: { data: { flatpickr_target: "endTime"}, id: "endtime" }, label: false, placeholder: "checkout"%>
+        </div>
+        <div class= "col-12 col-md-2 nav-search-bar">
+          <button name="button" type="submit" class="btn btn-flat">
+            <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

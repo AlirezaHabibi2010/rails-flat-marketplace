@@ -1,9 +1,11 @@
   <h2 class="text-center mt-3">Find the perfect accommodation for your dream holidays</h2>
-  <div class="row justify-content-between align-content-stretch m-1">
+  <%= render "shared/search"%>
+
+  <div class="row justify-content-between align-content-stretch m-0">
     <%# small window %>
-    <div class="col-12 px-1 m-0 d-md-none">
+    <div class="col-12 px-1 m-0 d-md-none ">
       <div class="" id="collapsableMap">
-        <div class="" style="height: 300px"
+        <div class="z-index-n2" style="height: 300px;"
           data-controller="map"
           data-map-markers-value="<%= @markers.to_json %>"
           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
@@ -12,11 +14,11 @@
     </div>
 
 
-    <div class="col-12 col-md-6">
-      <ul class="row align-content-between  p-0 m-0">
+    <div class="col-12 col-md-6 px-1">
+      <ul class="row align-content-between px-1 m-0">
         <% @flats.each do |flat| %>
-          <div class="col-12 col-md-6 ol-lg-6 col-xl-4">
-            <li class="card mb-1">
+          <div class="col-12 col-md-6 ol-lg-6 col-xl-4 p-1 ">
+            <li class="card rounded shadow-sm">
               <%= render "gallery", flat: flat%>
               <div class="card-body d-flex justify-content-between  flex-column">
                 <h4 class="card-title"><%= flat.name %></h4>
@@ -31,7 +33,7 @@
       </ul>
     </div>
 
-    <div class="col-md-6 px-1 m-0  d-none d-md-block">
+    <div class="col-md-6 px-0 m-0 d-none d-md-block">
       <div class="position-sticky sticky-top" id="collapsableMap">
         <div class="vh-100"
           data-controller="map"
