@@ -1,11 +1,6 @@
 <div class="container">
-<div class="d-flex flex-wrap justify-content-center w-100">
-
-<h1 class="text-center mt-3">Edit Booking</h1>
-<%= simple_form_for @booking do |f| %>
-  <%= f.input :start_date,  label: 'CHECK-IN' , as: :string, input_html: { data: { flatpickr_target: "startTime" } } %>
-  <%= f.input :end_date,  label: 'CHECK-OUT' , as: :string, input_html: { data: { flatpickr_target: "endTime" } ,id: 'endtime'} %>
-  <%= f.submit 'Submit', class: "btn btn-primary" %>
-<% end %>
-</div>
+  <h1 class="text-center mt-3">Edit Booking</h1>
+  <div class="d-flex flex-wrap justify-content-center w-100">
+    <%= render "bookings/form", flat: @flat, booking: @booking%>
+  </div>
 </div>

@@ -1,18 +1,26 @@
   <div class="container my-3">
-  <div class="row p-0 m-0">
+  <div class="row p-0 m-0 align-content-stretch">
     <div class="col-12 col-md-6">
-      <div class="d-flex align-items-start flex-column align-items-stretch">
-        <div class="border border-3 rounded-end p-3">
-          <%= render "flats/gallery", flat: @flat%>
-        </div>
-        <div class="d-flex justify-content-around  flex-wrap border border-3 rounded-end p-3">
-          <div class="p-0"><%= @flat.price %> € per night</div>
-          <div class="p-0"><%= @flat.address %></div>
+      <div class="d-flex align-items-start flex-column h-100 align-middle">
+        <div class="border border-3 rounded-end p-3 flex-grow-1 d-flex align-middle flex-column justify-content-center">
+           <%= render "flats/gallery", flat: @flat%>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-6 border border-3 rounded-end p-3 d-flex justify-content-between  flex-column">
+    <div class="col-12 col-md-6">
+      <div class="d-flex justify-content-between flex-column align-items-stretch h-100">
+        <div class="d-flex justify-content-around  flex-column flex-wrap border border-3 rounded-end p-3 flex-grow-1">
+          <div class="p-0"><strong>Price: </strong><%= @flat.price %> € per night</div>
+          <div class="p-0"><strong>Address: </strong><%= @flat.address %></div>
+        </div>
+        <div class="border border-3 rounded-end p-3">
+          <%= render "bookings/form", flat: @flat, booking: @booking%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 border border-3 rounded-end p-3 d-flex justify-content-between  flex-column">
       <h1><%= @flat.name %></h1>
       <div>
         <h4 class="card-title">Description:</h4>
@@ -23,23 +31,14 @@
         <h4>Details:</h4>
         <p><strong>Owner: </strong><%= @flat.user.first_name+ " " + @flat.user.last_name %></p>
       </div>
-      <div>
-<div id='flat-booking-dates' data-unavailable="<%= @flat.unavailable_dates.to_json %>">
-       <%= simple_form_for([@flat, @booking], data: { controller: 'flatpickr' }) do |f| %>
-        <%= f.input :start_date,  label: 'CHECK-IN' , as: :string, input_html: { data: { flatpickr_target: "startTime" } } %>
-        <%= f.input :end_date,  label: 'CHECK-OUT' , as: :string, input_html: { data: { flatpickr_target: "endTime"} ,id: 'endtime'} %>
-        <%= f.submit 'Submit', class: "btn btn-primary" %>
-      <% end %>
- </div>
-      </div>
     </div>
 
     <div class="col-12 border border-top-0 border-3 rounded-end p-3 d-flex justify-content-between  flex-column">
-       <h4 class="">Booking requests for this flat</h4>
+       <h4 class="">Pending requests for this flat</h4>
         <ol class="list-group list-group-horizontal flex-fill">
           <% @flat.bookings.where({declined: false}).where('end_date >= ?', Date.today).order(:start_date).each do |booking| %>
             <li class=" list-group-item d-flex justify-content-between flex-wrap
-              <%= booking.confirmed_by_owner ? "list-group-item-success" : "list-group-item-warning" %>
+              <%= booking.confirmed_by_owner ? "d-none" : "list-group-item-warning" %>
               ">
               <div class="m-0 p-0">
                 <strong>From:</strong><%= booking.start_date%><br>
