@@ -1,47 +1,36 @@
 
 # Furnished Flat Rental Marketplace (Ruby on Rails)
 
-Welcome to the Furnished Flat Rental Marketplace! This platform allows users to rent furnished flats and facilitates the rental process. This Readme.md file provides instructions on how to deploy the application on Heroku and how to use the marketplace.
+FlatRent is a web application that allows users to rent furnished flats from private owners. Users can browse through different types of flats, such as studios, apartments, lofts, etc., and see their details, such as location, price, amenities, and availability. Users can also contact the owners and request to rent a flat for a specific period of time. Owners can accept or decline the requests and manage their rentals.
 
-## Deployment on Heroku
+## How to use it
 
-To deploy the Furnished Flat Rental Marketplace on Heroku, follow these steps:
+To use FlatRent, you need to have Ruby on Rails installed on your machine. You can follow the instructions here: https://guides.rubyonrails.org/getting_started.html
 
-1. Clone the repository to your local machine using the following command:
+You also need to have a Heroku account and the Heroku CLI installed. You can follow the instructions here: https://devcenter.heroku.com/articles/heroku-cli
 
-```sh
-git clone git@github.com:AlirezaHabibi2010/rails-flat-marketplace.git
-```
+To run FlatRent locally, follow these steps:
 
-2. Navigate to the project's directory:
+- Clone this repository to your local machine: `git clone git@github.com:AlirezaHabibi2010/rails-flat-marketplace.git`
+- Change to the project directory: `cd rails-flat-marketplace`
+- Install the dependencies: `rails active_storage:install`
+- Create the database: `rails db:create`
+- Run the migrations: `rails db:migrate`
+- Seed the database with some sample data: `rails db:seed`
+- Start the server: `rails server`
+- Open your browser and go to http://localhost:3000
 
-```sh
-cd furnished-flat-rental-marketplace
-```
+To deploy FlatRent to Heroku, follow these steps:
 
-3. Create a new Heroku application:
-
-```sh
-heroku create [app_name]
-```
-
-
-4. Push the code to Heroku:
-
-```sh
-git push heroku master
-```
-
-
-5. Install active_storage, migrate the database, and run any necessary tasks:
-
-```sh
-heroku run rails active_storage:install
-heroku run rails db:migrate
-```
-
-
-6. Your Furnished Flat Rental Marketplace is now deployed on Heroku. Access it by visiting the provided Heroku URL.
+- Log in to your Heroku account: `heroku login`
+- Create a new app on Heroku: `heroku create`
+- Push your code to Heroku: `git push heroku master`
+- Install the dependencies:
+  ```sh
+   heroku run  rails active_storage:install
+  ```
+- Run the migrations on Heroku: `heroku run rails db:migrate`
+- Open your app on Heroku: `heroku open`
 
 ## Usage
 
@@ -70,10 +59,30 @@ By utilizing the Furnished Flat Rental Marketplace, users can enjoy a seamless r
 
 If you would like to contribute to the Furnished Flat Rental Marketplace, feel free to submit pull requests or raise issues in the repository. Your contributions are welcome and will help improve the platform for everyone.
 
-## License
+## How can anyone benefit from this code
 
-The Furnished Flat Rental Marketplace is released under the [MIT License](LICENSE).
+Anyone who wants to learn how to build a web application using Ruby on Rails can benefit from this code. This code demonstrates how to use various features and concepts of Rails, such as:
 
+- Models, views, controllers, and routes
+- Active Record associations and validations
+- Forms and form helpers
+- Partials and layouts
+- Authentication and authorization
+- Flash messages and redirects
+- Image uploading and processing
+- Pagination and search
+- User registration and profile editing
+- User ratings and reviews
+- Flat categories and filters
+- Google Maps integration for flat locations
+
+Anyone who wants to improve or extend this code can also benefit from it. Some possible features that can be added are:
+
+- create chat between renter and owner
+- Payment integration for flat rentals
+- Notifications and reminders for owners and users
+- Action Mailer and email templates
+- Testing with RSpec and Capybara
 
 
 
