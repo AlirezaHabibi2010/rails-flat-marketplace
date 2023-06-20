@@ -15,27 +15,27 @@ git clone git@github.com:AlirezaHabibi2010/rails-flat-marketplace.git
 
 2. Navigate to the project's directory:
 
-````sh
+```sh
 cd furnished-flat-rental-marketplace
 ```
 
 3. Create a new Heroku application:
 
-````sh
+```sh
 heroku create [app_name]
 ```
 
 
 4. Push the code to Heroku:
 
-````sh
+```sh
 git push heroku master
 ```
 
 
 5. Install active_storage, migrate the database, and run any necessary tasks:
 
-````sh
+```sh
 heroku run rails active_storage:install
 heroku run rails db:migrate
 ```
